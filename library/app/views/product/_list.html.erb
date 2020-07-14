@@ -1,0 +1,29 @@
+<% if @products.name.present? %>
+	<% @products.in_groups_of(3, false).each do |group| %>
+		<div class="card-deck">
+			<% group.each do |p| %>
+			 	<div class="card mb-3" style="max-width: 18rem;">
+					<%= image_tag("#{p.image_url}", alt:"No Image",  class:"card-img-top") %>
+				    <div class="card-body">
+				      <h5 class="card-title"><%= p.name %></h5>
+				      <p class="font-weight-bold">Rs. <%= number_with_precision(p.price, precision:2) %></p>
+				      <p class="card-text"><%= p.description %></p>
+				    </div>
+				    <div class="card-footer">
+				      	<small class="text-muted">
+				      		<%= distance_of_time_in_words_to_now(p.created_date) %> ago
+				      	</small>
+				      	<%= form_with(url: "/order/confirm", method: "post", local: true) do |f| %>
+				      		<!--<a href="/product/<%=p.id %>" class="btn btn-primary btn-md">View</a>-->
+				    		<a href="/product/<%=p.id %>" class="btn btn-primary btn-md">View</a>
+				    		<%= hidden_field_tag(:product_id, "#{p.id}") %>
+				    		<%= f.submit "Order", class: "btn btn-primary btn-md" %>
+				    	<% end %>
+				    </div>
+				</div>
+			<% end %>	
+		</div>
+	<% end %>
+<% else %>
+	No Product to display
+<% end %>

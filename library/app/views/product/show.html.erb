@@ -1,0 +1,17 @@
+<%= link_to "Back to list", :back %>
+<div class="card-deck">
+	<div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+		<%= image_tag("#{@product.image_url}", alt:"No Image",  class:"card-img-top") %>
+		<div class="card-body">
+		  <h5 class="card-title"><%= @product.name %></h5>
+		  <p class="font-weight-bold">Rs. <%= number_with_precision(@product.price, precision:2) %></p>
+		  <p class="card-text"><%= @product.description %></p>
+		</div>
+		<div class="card-footer">
+		  	<small class="text-muted">
+		  		<%= distance_of_time_in_words_to_now(@product.created_date) %> ago
+		  	</small>
+		  	<a href="#" class="btn btn-primary btn-md">Order</a>
+		</div>
+	</div>
+</div>

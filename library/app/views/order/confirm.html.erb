@@ -1,0 +1,103 @@
+<div class="container p-3 my-3 ">
+	<p id="notice"><%= notice %></p>
+  <div class="row">
+  	<div class="col-12 col-md-12">
+  		<h5>Items ordered in your account:</h5>
+  	</div>
+  	<div class="row">
+  	</div>
+  	<div class="row" id="order_#{@product.id}">
+	  	 <div class="col-6 col-md-2">
+	  	 	<%= image_tag("#{@product.image_url}", alt:"No Image",  class:"card-img-top") %>
+	  	 </div>
+	  	 <div class="col-12 col-md-4">
+	  	 	<p><b><%= @product.name %></b></p>
+	  	 	<p><%= @product.description %></p>
+	  	 </div>
+	  	 <div class="col-6 col-md-2">
+	  	 	Quantity : <b><%= number_field(:product, :price, in: 1.0..5.0, step: 1,  value: @quantity, onchange: "calculatePriceOnQuantity(this.value, \"#{@product.id}\", \"quantity_#{@product.id}\")") %></b>
+	  	 </div>
+	  	 <div class="col-6 col-md-2">
+	  	 	<p class="font-weight-bold" id="quantity_<%= @product.id %>">Rs. <%= number_with_precision(@order.ordered_price, precision:2) %></p>
+	  	 </div>
+	  	 <div class="col-6 col-md-1">
+	  	 	<%= link_to "Remove", "#", :onclick => "removeOrder(\"#{@orderId}\", \"order_#{@product.id}\")"; %>
+	  	 </div>
+	  	 <div class="col-6 col-md-1">
+	  	 	<div id="paypal-button-container"></div>
+	  	 </div>
+
+       <script src="https://www.paypal.com/sdk/js?client-id=<%= Rails.configuration.application['PAYPAL_CLIENT_ID'] %>&currency=USD"></script>
+	  	 
+       <script>
+	  	 	 paypal.Buttons().render('#paypal-button-container');
+
+	  	      (function setupPaypal() {
+                function isPayment() {
+                  return $('[data-charges-and-payments-section] input[name="orders[product_id]"]:checked').length
+                }
+
+                function submitOrderPaypal(chargeID) {
+                  var $form = $("#order-details");
+                  // Add a hidden input orders[charge_id]
+                  $form.append($('<input type="hidden" name="orders[charge_id]"/>').val(chargeID));
+                  // Set order type
+                  $('#order-type').val('paypal');
+                  $form.submit();
+                }
+
+                paypal.Buttons({
+                  env: "<%= Rails.configuration.application['PAYPAL_ENV'] %>",
+                  createOrder: function(data, actions) {
+                  	 return actions.order.create({
+                        purchase_units: [{
+                            reference_id: "<%= @orderId %>",
+                            description: "<%= @product.description.html_safe %>",
+
+                            custom_id: "<%= @orderId %>_<%= @product.id %>",
+                            soft_descriptor: "<%= @product.description.html_safe %>",
+                            amount: {
+                                currency_code: "USD",
+                                value: "<%= @order.ordered_price %>",
+                                breakdown: {
+                                    item_total: {
+                                        currency_code: "USD",
+                                        value: "<%= @product.price %>"
+                                    }
+                                }
+                            },
+                            items: [{
+                                      name: "<%= @product.name.html_safe %>",
+                                      description: "<%= @product.description.html_safe %>",
+                                      sku: "xyz-2654",
+                                      unit_amount: {
+                                          currency_code: "USD",
+                                          value: "<%= @product.price %>"
+                                      },
+                                      quantity: "<%= @order.ordered_quantity %>"
+                                    }],
+
+                        }]
+                });
+            },
+            onApprove: function(data, actions) {
+              return actions.order.capture().then(function(details) {
+                  alert('Transaction completed by ' + details.payer.name.given_name);
+                  // Call your server to save the transaction
+                  return fetch('/api/paypal-transaction-complete', {
+                      method: 'post',
+                      headers: {
+                          'content-type': 'application/json'
+                      },
+                      body: JSON.stringify({
+                          orderID: data.orderID
+                      })
+                  });
+              });
+          }
+      })
+  }());
+</script>
+  	</div>
+  </div>
+</div>
