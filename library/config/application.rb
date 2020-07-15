@@ -17,7 +17,6 @@ module MyApp
     # the framework and any gems in your application.
 
     ## add config variables to environment variable
-	
 	  config.application = config_for(:application)
   end
 end
