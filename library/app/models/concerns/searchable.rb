@@ -6,14 +6,27 @@ module Searchable
    include Elasticsearch::Model::Callbacks
 
    def as_indexed_json(_options = {})
-     as_json(only: %i[name])
+     as_json(only: %i[name description price image_url created_date])
+     #as_json(
+      #  #only: [:name, :description]
+     #)
    end
 
-   settings settings_attributes do
-     mappings dynamic: false do
-       indexes :name, type: :text, analyzer: :autocomplete
-     end
-   end
+#   settings settings_attributes do
+#     mappings dynamic: false do
+#       indexes :name, type: 'text', analyzer: 'autocomplete'
+#       indexes :description, type: :keyword
+#     end
+#   end
+    settings index: { number_of_shards: 1 } do
+      mappings dynamic: 'false' do
+        indexes :name, type: 'text'
+        indexes :description, type: :keyword
+        indexes :price, type: :keyword
+        indexes :image_url, type: :keyword
+        indexes :created_date, type: :keyword
+      end
+    end
 
    def self.search(query, filters)
    
@@ -22,13 +35,13 @@ module Searchable
      end
 
      @search_definition = {
-       size: 5,
+       #size: 5,
        query: {
          bool: {
            must: [],
            should: [],
            filter: []
-         }
+         }  
        }
      }
 
@@ -51,6 +64,7 @@ module Searchable
      #end
 
      __elasticsearch__.search(@search_definition)
+     
    end
  end
 

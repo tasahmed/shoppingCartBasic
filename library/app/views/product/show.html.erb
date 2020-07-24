@@ -1,6 +1,7 @@
-<%= link_to "Back to list", :back %>
+<div class="row" style="padding-top:5%; min-width:1000px; width: auto !important;width:1000px; ">
+
 <div class="card-deck">
-	<div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+	<div class="card mb-3 " style="max-width: 18rem;">
 		<%= image_tag("#{@product.image_url}", alt:"No Image",  class:"card-img-top") %>
 		<div class="card-body">
 		  <h5 class="card-title"><%= @product.name %></h5>
@@ -11,7 +12,12 @@
 		  	<small class="text-muted">
 		  		<%= distance_of_time_in_words_to_now(@product.created_date) %> ago
 		  	</small>
-		  	<a href="#" class="btn btn-primary btn-md">Order</a>
+		  	<%= form_with(url: "/order/confirm", method: "post", local: true) do |f| %>
+		    		<%= hidden_field_tag(:product_id, "#{@product.id}") %>
+		    		<%= f.submit "Order", class: "btn btn-primary btn-md" %>
+		    	<% end %>
+		    </div>
 		</div>
 	</div>
+</div>
 </div>

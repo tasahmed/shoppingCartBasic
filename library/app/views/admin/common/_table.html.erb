@@ -1,0 +1,20 @@
+<div class="table-responsive">
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <% @columns.attributes.each do |col_attr_name, col_attr_value| %>
+          <th><%= col_attr_name %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @rows.each do |array| %>
+        <tr>
+            <% array.attributes.each do |attr_name, attr_value| %>
+              <td><%= getUserType(attr_name, attr_value) %></td>
+            <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -22,7 +22,6 @@ window.searchProducts = function() {
 window.calculatePriceOnQuantity = function(value, id, elem_id) {
 	//form ajax request json data
 	var data = { productQuantity : value, productId : id}
-	console.log(data);
 	initiaAjax('/product/calculateValue', data, elem_id)
 	//$('#'+id).html('test').delay( 100 )
 }

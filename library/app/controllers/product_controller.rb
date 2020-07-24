@@ -39,13 +39,14 @@ class ProductController < ApplicationController
 		if params[:search_val]
 			results = Product.search(params[:search_val], search_params)
 
+			logger.debug "Raw Products JSON output: #{results.to_json}"
 			@products = results.map do |r|
 				r.merge(r.delete('_source')).merge('id': r.delete('_id')).without('_index','_type', '_id', '_score')
 			end
 
 			#@products   = Product.all
 
-			logger.debug "#{@products.inspect}"
+			logger.debug "Products JSON output: #{@products.to_json}"
 
 			@responseCode = true;
 			@html 		  = render_to_string(:partial => 'product/list', :locals => {:products => @products})

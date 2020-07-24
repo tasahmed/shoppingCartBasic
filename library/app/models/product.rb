@@ -21,5 +21,5 @@ class Product < ApplicationRecord
 	def set_paypal_executed
 		self.status = Order.statuses[:paypal_executed]
 	end
-	
+
 end
