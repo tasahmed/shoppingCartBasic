@@ -1,4 +1,4 @@
 <div class="d-flex justify-content-end" style="width:100%; padding-bottom:2%">
-<%= link_to 'Add New', '/admin/user/new', class: "btn btn-primary" %>
+	<%= link_to 'Add New', '/admin/user/new', class: "btn btn-dark" %>
 </div>
-<%= render partial: "admin/common/table", locals: {columns: @columns, rows: @rows} %>
+<%= render partial: "admin/common/table", locals: {columns: @columns, rows: @rows, curd: @curd} %>

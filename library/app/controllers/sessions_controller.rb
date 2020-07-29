@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
 	       redirect_to '/admin/user/list'
         ## other user_types are treated as normal users for now
         else
-         redirect_to '/product/userList'
+         redirect_to '/product/list'
         end
 	   
      else
@@ -42,7 +42,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = session[:user_type] = nil
-    flash[:message]   = "User logged out Successfully!"
+    #flash[:message]   = "User logged out Successfully!"
     redirect_to '/welcome'
   end
 

@@ -1,5 +1,6 @@
 module Admin::UserHelper
 
+	## Function to get user type
 	def getUserType(attrName, attrValue)
 		
 		if attrName == 'user_type' && attrValue == 0
@@ -9,7 +10,6 @@ module Admin::UserHelper
 		else
 			attrValue	
 		end
-
 	end
 
 end

@@ -24,7 +24,6 @@ Rails.application.configure do
     }
   else
     config.action_controller.perform_caching = false
-
     config.cache_store = :null_store
   end
 
@@ -32,7 +31,8 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.perform_deliveries = true 
+  config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.perform_caching = false
 
@@ -61,4 +61,18 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
+  config.action_mailer.delivery_method = :smtp
+  # SMTP settings for gmail
+  config.action_mailer.smtp_settings = {
+   :address               => Rails.configuration.application['GMAIL_SMTP_ADDR'],
+   :port                  => Rails.configuration.application['GMAIL_PORT'],
+   :user_name             => Rails.configuration.application['GMAIL_USERNAME'],
+   :password              => Rails.configuration.application['GMAIL_PASSWORD'],
+   :authentication        => Rails.configuration.application['GMAIL_AUTH_TYPE'],
+   :enable_starttls_auto  => Rails.configuration.application['GMAIL_TLS_AUTO']
+  }
+
+
+  config.active_job.queue_adapter = :delayed_job
+  
 end

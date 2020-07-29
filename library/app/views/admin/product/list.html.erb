@@ -1,0 +1,9 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+<h1 class="h2">Products</h1>
+</div>
+<div class="row">
+	<div class="d-flex justify-content-end" style="width:100%; padding-bottom:2%">
+		<%= link_to 'Add New', '/admin/product/new', class: "btn btn-dark" %>
+	</div>
+	<%= render partial: "admin/common/table", locals: {columns: @columns, rows: @rows} %>
+</div>

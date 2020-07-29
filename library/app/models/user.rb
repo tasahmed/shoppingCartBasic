@@ -1,9 +1,14 @@
 class User < ApplicationRecord
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  	has_secure_password
+  has_secure_password
 	has_many :order
-	#validate_presence_of :name,
-	#enum userStatus : {0:inactive, 1:active},
-	#enum userType : {0:buyer, 1:seller, 2:admin}
+	
+	validates :name, :email, presence: true, length: {minimum: 6, maximum: 50}
+	validates :email, uniqueness: true, length: {minimum: 10, maximum: 300}
+	
+	enum userStatus: { inactive: 0, active: 1 }
+	enum userType: { admim: 0, normal: 1, buyer: 2 }
+
 end

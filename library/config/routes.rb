@@ -1,11 +1,7 @@
 Rails.application.routes.draw do
 
-  namespace :admin do
-    get 'user/list'
-  end
   root controller: :product, action: :list
   
-
   get 'user/new'
   post 'user/create'
   #get 'sessions/new'
@@ -43,9 +39,24 @@ Rails.application.routes.draw do
 
   ##admin routes
   namespace :admin do
-    get 'user/list', to: 'user#list'
-    post 'adminlogout', to: 'user#logout'
-    get 'user/new', to: 'user#new'
-    post 'user/create', to: 'user#create'
+    
+    post  'adminlogout', to: 'user#logout'
+    
+    #user verbs
+    get   'user/list', to: 'user#list'
+    get   'user/new', to: 'user#new'
+    post  'user/create', to: 'user#create'
+    get   'user/edit/:id', to: 'user#edit'
+    patch 'user/update/:id', to: 'user#update'
+    get   'user/delete/:id', to: 'user#destroy'
+
+    #product verbs
+    get   'product/list', to: 'product#list'
+    get   'product/new', to: 'product#new'
+    post  'product/create', to: 'product#create'
+    get   'product/edit/:id', to: 'product#edit'
+    patch 'product/update/:id', to: 'product#update'
+    post  'product/create', to: 'product#create'
+    get   'product/delete/:id', to: 'product#destroy'
   end
 end

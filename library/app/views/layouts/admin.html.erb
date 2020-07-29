@@ -39,15 +39,15 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/admin/product/list">
               <span data-feather="shopping-cart"></span>
               Products
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="/admin/user/list">
               <span data-feather="users"></span>
-              Customers
+              Users
             </a>
           </li>
           <li class="nav-item">
@@ -98,11 +98,26 @@
         </ul>
       </div>
     </nav>
-
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <% flash.each do |key, value| %>
+          <div class="alert alert-<%= key %> ?> alert-dismissible fade show" role="alert" style="margin-top:3%;">
+              <% if value.kind_of?(Array) %>
+              <h5>We encountered the below error(s):</h5>  
+              <ul>
+                <% value.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+              </ul> 
+              <% else %>
+                <%= value %>
+              <% end %>   
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+         <% end %>
       <%= yield %>
     </main>
   </div>
 </div>
 </html>
-

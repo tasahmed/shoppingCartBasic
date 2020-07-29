@@ -59,6 +59,9 @@ group :development do
   gem "jquery-rails"
   gem "money-rails"
   gem 'paypal-sdk-rest'
+  
+  #delayed job queue gem
+  gem "delayed_job_active_record"
 end
 
 group :test do
