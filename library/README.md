@@ -1,24 +1,34 @@
-# README
+# Shopping Cart Basic
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+- This application is a basic Shopiing cart to with minor functionaliteis with has below user roles:
 
-Things you may want to cover:
+* Admin
+* User
+* Seller
 
-* Ruby version
+- This application containts below interfaces
 
-* System dependencies
+* Admin
+* User
 
-* Configuration
+- Description & Overview
+  Using this application and admin can add users and products which will be displayed to the users.  The user has to register to the application to view the products.  To enable faster search elastci search API is used and for payment paypal integration gateway is used.
 
-* Database creation
+- Technolog Stack
 
-* Database initialization
+ * Ruby - 2.5
+ * Ruby on Rails - 6.0.3
+ * Elastic Search - 7.8
+ * Postgressql- 9
+ * Paypal payment gateway
 
-* How to run the test suite
+-_Gems required installed
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+ * pg
+ * bcrypt
+ * bootstrap
+ * jquery 
+ * elasticsearch-model
+ * elasticsearch-rails
+ * rack-mini-profiler
+ * delayed_job_active_record
