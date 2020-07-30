@@ -44,7 +44,7 @@
         </div> 
         <div class="row p-2 flex-fill bd-highlight">
          <div class="col-2">
-            <div class="list-group" style="margin-top:9%;">
+            <div class="list-group">
                <% @categories.each do |c| %>
                <a href="/category/list?categoryId=<%= c.id %>" class="list-group-item list-group-item-action"><%= c.name %></a>
                <% end %>
