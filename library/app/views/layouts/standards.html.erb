@@ -15,40 +15,36 @@
    </head>
 
    <body id = "library">
-      <div id = "container">
-        <div class="row">
+      <div id = "d-flex" style="width:100%">
+        <div class="row p-2 flex-fill ">
             <div class="col-12 w-25">
-               <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+               <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="padding-left:2%"> 
                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                    <span class="navbar-toggler-icon"></span>
                  </button>
                  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
                   <div class="row" lass="col-12">
-                     <div class="col-4">
                         <!--<a class="navbar-brand" href="/product/list">Shopping Online</a>-->
-                        <%= link_to "Shopping Online", '/product/list', class: "navbar-brand" %>
-                     </div>
-                     <div class="col-8">
-                         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                           <li class="nav-item active">
-                             <a class="nav-link" href="/product/list">Home <span class="sr-only">(current)</span></a>
-                           </li>
-                           <li class="nav-item">
-                             <%= link_to "Logout", logout_path, class: "nav_link", method: :destroy, style: 'text-decoration:none; padding-right: 0.5rem; padding-left: 0.5rem; display: block; padding: 0.5rem 1rem;' %>
-                           </li>
-                         </ul>
-                         <form class="form-inline my-2 my-lg-0" data-remote="true" method="post">
-                           <input name="search_product" id="search_product" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                           <button class="btn btn-outline-light my-2 my-sm-0" type="submit" onclick="searchProducts(); return false;">Search</button>
-                         </form>
-                     </div>
+                    <%= link_to "Shopping Online", '/product/list', class: "navbar-brand" %>
+                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                       <li class="nav-item active">
+                         <a class="nav-link" href="/product/list">Home </a>
+                       </li>
+                       <li class="nav-item">
+                         <%= link_to "Logout", logout_path, class: "nav_link", method: :destroy, style: 'text-decoration:none; padding-right: 0.5rem; padding-left: 0.5rem; display: block; padding: 0.5rem 1rem;' %>
+                       </li>
+                     </ul>
+                     <form class="form-inline my-2 my-lg-0" data-remote="true" method="post">
+                       <input name="search_product" id="search_product" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                       <button class="btn btn-outline-light my-2 my-sm-0" type="submit" onclick="searchProducts(); return false;">Search</button>
+                     </form>
                   </div>
                </nav>
             </div>
         </div> 
-        <div class="row">
+        <div class="row p-2 flex-fill bd-highlight">
          <div class="col-2">
-            <div class="list-group" style="margin-top:29%;">
+            <div class="list-group" style="margin-top:9%;">
                <% @categories.each do |c| %>
                <a href="/category/list?categoryId=<%= c.id %>" class="list-group-item list-group-item-action"><%= c.name %></a>
                <% end %>

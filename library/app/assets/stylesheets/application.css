@@ -12,5 +12,10 @@
  *
  *= require bootstrap
  *= require_tree .
-  *= require_self
+ *= require_self
+  
+*= stub admin/style.css
+*= stub scaffolds.css
+
+ 
  */
