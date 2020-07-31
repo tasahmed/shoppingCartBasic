@@ -1,4 +1,7 @@
-<div class="container" style="background-color: #7952B3; color: #fff; max-width:100%; border:10%; padding:20%">
+<div class="container" style="background-color: #7952B3; color: #fff; max-width:100%; border:10%; padding:10%">
+	
+	<%= render 'layouts/flash_message_include' %>
+	
 	<div class="row">
 		<h1>Login</h1>
 	</div>
@@ -19,7 +22,7 @@
 		        </label>
 		      </div>
 		    </div>
-		     <%= submit_tag "Login", class: "btn btn-primary" %>
+		     <%= submit_tag "Login", class: "btn btn-primary", :onclick => "return validatelogin();" %>
 		<%end%>
 	</div>
 </div>

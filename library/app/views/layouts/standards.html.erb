@@ -51,7 +51,8 @@
             </div>   
          </div>
          <div class="col-10">
-            <%= yield -%>
+             <%= render 'layouts/flash_message_include' %>
+            <%= yield %>
          </div>
         </div>
       </div>

@@ -10,6 +10,11 @@ class SessionsController < ApplicationController
 
   def create
 
+    if (params[:username] == '' || params[:password] == '')
+       redirect_to '/login', flash: { 'danger' => 'Username & password cannot be empty!'}
+       return
+    end
+
 	   @user = User.find_by(name: params[:username])
 	   
      if @user && @user.authenticate(params[:password])
@@ -19,7 +24,7 @@ class SessionsController < ApplicationController
         session[:user_type] = @user.user_type
 
         ##user_type 1 = admin
-        if @user.user_type == 1
+        if @user.user_type == 0
 	       redirect_to '/admin/user/list'
         ## other user_types are treated as normal users for now
         else
@@ -29,7 +34,8 @@ class SessionsController < ApplicationController
      else
         #logger.debug "else condition1 #{@user.to_json}"
         #logger.debug "else condition2 #{@user.authenticate(params[:password])}"
-	      redirect_to '/login'
+        #@user.errors.full_messages
+	      redirect_to '/login', flash: { 'danger' => 'Wrong username and password, please try again!'}
 	   end
   end
 

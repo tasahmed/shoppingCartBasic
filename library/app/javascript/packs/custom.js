@@ -48,3 +48,25 @@ window.removeOrder = function(orderId, elemId) {
 	event.preventDefault();
 	console.log(orderId)
 }
+
+/*window.validatelogin = function() {
+
+	let username = $('#username').val();
+	let pwd			 = $('#password').val();
+
+	console.log('username'+username);
+	console.log('password'+pwd);
+
+	let returnValue = false;
+	
+	if (username !='' && pwd !='') {
+		returnvalue = true;
+	} else {
+		$('#login_msg').html = 'Please enter username and password!'
+		$(".alert").show();
+		//return false;
+	}
+
+
+	return returnValue; 
+}*/

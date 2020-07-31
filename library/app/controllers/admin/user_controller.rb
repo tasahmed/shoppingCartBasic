@@ -63,6 +63,7 @@ class Admin::UserController < ApplicationController
 		
 		@user.destroy
 		redirect_to '/admin/user/list', flash: { 'success' => 'User deleted successfully'}
+		
 	end
 
 	def update
@@ -74,7 +75,7 @@ class Admin::UserController < ApplicationController
 		else
 			@message 	  = @user.errors.full_messages
 	   	@alert_type = 'danger'
-	   	redirect_to '/admin/user/edit',  flash: { @alert_type => @message.to_a}
+	   	redirect_to "/admin/user/edit/#{params[:id]}",  flash: { @alert_type => @message.to_a}
 		end
 	end
 

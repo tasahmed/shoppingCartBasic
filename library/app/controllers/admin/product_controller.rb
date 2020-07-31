@@ -25,14 +25,22 @@ class Admin::ProductController < ApplicationController
 
 	def create
 
-		new_filename = upload_image(params[:product][:image_url])
-  	params[:product][:image_url] = "/uploads/#{new_filename}"
-  	params[:product][:created_date] = DateTime.now 
+		if (!params[:product][:image_url].nil?)
+			new_filename = upload_image(params[:product][:image_url])
+	  	params[:product][:image_url] = "/uploads/#{new_filename}"
+	  end
 
-		@product = Product.new(params.require(:product).permit(:name, :category_id, :description, :image_url, :price, :quantity, :created_date))
-		@product.save
+	  params[:product][:created_date] = DateTime.now
 
-		redirect_to '/admin/product/list'
+		@product = Product.new(set_params)
+		
+		if @product.save
+			redirect_to "/admin/product/list", flash: {'success' => 'Product was successfully added'}
+		else
+			redirect_to "/admin/product/new", flash: {'danger' => @product.errors.full_messages}
+		end
+
+		#redirect_to '/admin/product/list'
 
 	end
 
@@ -47,13 +55,15 @@ class Admin::ProductController < ApplicationController
 			new_filename = upload_image(image_url)
 	  	params[:product][:image_url] = "/uploads/#{new_filename}"
 	  else
-	  	
 	  	params[:product][:image_url] = @product.image_url
 	  end
 
-		@product.update(params.require(:product).permit(:name, :category_id, :description, :image_url, :price, :quantity, :created_date))
-
-		redirect_to '/admin/product/list'
+		if @product.update(set_params)
+			redirect_to "/admin/product/list", flash: {'success' => 'Product was successfully edited'}
+		else
+			redirect_to "/admin/product/edit/#{params[:id]}", flash: {'danger' => @product.errors.full_messages}
+		end
+		#redirect_to '/admin/product/list'
 	end
 
 	def destroy
@@ -85,6 +95,10 @@ class Admin::ProductController < ApplicationController
 
 	def set_product
   	@product  = Product.find(params[:id])
+  end
+
+  def set_params
+  	params.require(:product).permit(:name, :category_id, :description, :image_url, :price, :quantity, :created_date)
   end
 
 end
