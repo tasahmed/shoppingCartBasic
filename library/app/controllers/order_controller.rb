@@ -11,6 +11,7 @@ class OrderController < ApplicationController
 		if params[:product_id]
 
 			product_id = params[:product_id]
+			#@product   = Product.find(product_id)
 			@product   = Product.find(product_id)
 
 			## call save method to save the new row value
@@ -18,12 +19,13 @@ class OrderController < ApplicationController
 				@orderId = self.save
 				
 				@quantity = 1
-				flash[:notice] = '<div class="alert alert-success" role="alert">Product saved to your order list</div>'.html_safe
+				#flash[:notice] = '<div class="alert alert-success" role="alert">Product saved to your order list</div>'.html_safe
 			else
-				flash[:notice] = '<div class="alert alert-info" role="alert">Product already available in your Order list, increase the quantity if you need !</div>'.html_safe
+				#flash[:notice] = '<div class="alert alert-info" role="alert">Product already available in your Order list, increase the quantity if you need !</div>'.html_safe
 				
 				##update the product price and quantity as per the latest update by customer
-				@order = Order.find_by product_id: product_id
+
+				@order   = Order.find_by product_id: product_id
 				@orderId = @order.id
 
 				logger.debug "Quantity: #{@order.ordered_quantity}"
@@ -32,9 +34,21 @@ class OrderController < ApplicationController
 				@quantity 		= @order.ordered_quantity
 			end	
 			
+			##get list of items already order to display in list
+			##get current user id
+			@user_id = session[:user_id]
+
+			@products = Product.joins(:orders).where(orders: {user_id: @user_id}).where.not(id: product_id).select("products.id as product_id, products.name, products.description, products.image_url, products.price as product_price, products.quantity as product_quantity, products.created_date, orders.id as order_id, orders.ordered_price, orders.ordered_quantity, orders.order_status")
+
+			logger.debug "All Products: #{@products.to_yaml}"
+
+			#get total number of products in order list count
+			@order_count = Order.where(user_id: @user_id, order_status: 0).count
+			@order_sum   = Order.where(user_id: @user_id, order_status: 0).sum("ordered_price")
+
 		else
-			flash[:notice] ='ERROR: Not able to add Account'
-      		render :new
+			flash[:notice] ='ERROR: Not able to add to order'
+  		render :new
 		end
 	end
 
@@ -42,7 +56,7 @@ class OrderController < ApplicationController
 		if @product.id
 			#create new value
 			@order = Order.create(product_id: @product.id, 
-						 user_id: 5, 
+						 user_id: session[:user_id], 
 						 ordered_price: @product.price,
 						 ordered_quantity: 1,
 						 orderd_date: DateTime.now, 

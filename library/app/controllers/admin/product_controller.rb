@@ -39,9 +39,6 @@ class Admin::ProductController < ApplicationController
 		else
 			redirect_to "/admin/product/new", flash: {'danger' => @product.errors.full_messages}
 		end
-
-		#redirect_to '/admin/product/list'
-
 	end
 
 	def edit
@@ -69,6 +66,10 @@ class Admin::ProductController < ApplicationController
 	def destroy
 		@product.destroy
 		redirect_to '/admin/product/list'
+	end
+
+	def checkout
+		
 	end
 
 	private

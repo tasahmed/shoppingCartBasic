@@ -64,21 +64,26 @@ class ProductController < ApplicationController
 		if params[:productQuantity] and params[:productId]
 			logger.debug "productQuantity:#{params[:productQuantity]}---productId:#{params[:productId]}"
 			#get produts single quantity price from table
-			@product   = Product.find(params[:productId])
-			productSum = (@product.price * Integer(params[:productQuantity]))
-			totalValue = "Rs. #{productSum}"
-
+			@product   				 = Product.find(params[:productId])
+			productSum 			   = (@product.price * Integer(params[:productQuantity]))
+			totalValue 				 = "Rs. #{productSum}"
+		
 			logger.debug "Product Sum#{productSum}"
 
 			##update rate value to table with the latest quantity
 			@Order = Order.find_by product_id:params[:productId]
 			@Order.update_attributes(ordered_price: productSum, ordered_quantity: params[:productQuantity])
+
+			##calculate cumulative total
+			@cumulativeTotal   = Order.where(user_id: session[:user_id], order_status: 0).sum("ordered_price")
+
+			cumulativeText = "Rs.#{@cumulativeTotal}"
 			responseCode = 1
 		else
 			responseCode = 0
 		end
 
-		render json: {success: responseCode, html_content: totalValue}
+		render json: {success: responseCode, html_content: totalValue, cumulativeTotal: cumulativeText}
 	end
 
 	private

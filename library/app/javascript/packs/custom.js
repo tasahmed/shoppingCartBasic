@@ -19,15 +19,17 @@ window.searchProducts = function() {
 	return false;
 }
 
-window.calculatePriceOnQuantity = function(value, id, elem_id) {
+window.calculatePriceOnQuantity = function(value, id, elem_id, secondary_field) {
 	//form ajax request json data
 	var data = { productQuantity : value, productId : id}
-	initiaAjax('/product/calculateValue', data, elem_id)
+	initiaAjax('/product/calculateValue', data, elem_id, secondary_field)
 	//$('#'+id).html('test').delay( 100 )
+	//update the cumulative total field as well
+
 }
 
 
-window.initiaAjax = function(reqUrl, postData, responsDiv) {
+window.initiaAjax = function(reqUrl, postData, responsDiv, secondary_field) {
 
 	$.ajax({
 	    type 	 :'POST',
@@ -39,6 +41,11 @@ window.initiaAjax = function(reqUrl, postData, responsDiv) {
 	      console.log('Success!');
 	      console.log(data.html_content)
 	      $('#'+responsDiv).html(data.html_content).delay(100);
+	      console.log(typeof(secondary_field))
+	      if (typeof(secondary_field) !='undefined') {
+	      	console.log(secondary_field);
+					$('#'+secondary_field).html(data.cumulativeTotal).delay(150);	      	
+	      }
 
 	    }
   	});
@@ -47,6 +54,7 @@ window.initiaAjax = function(reqUrl, postData, responsDiv) {
 window.removeOrder = function(orderId, elemId) {
 	event.preventDefault();
 	console.log(orderId)
+	console.log(elemId)
 }
 
 /*window.validatelogin = function() {
