@@ -12,8 +12,8 @@ class Admin::ProductController < ApplicationController
 		
 		#logger.debug "Product columns #{@columns.to_yaml}"
 		#pass this value to get the table rows
-		@rows    = Product.joins(:category).select("products.name as product, categories.name as category, products.description as description, products.image_url, products.price, products.quantity, products.created_date, products.id").order("created_date ASC")
-	
+		@rows    = Product.joins(:category).select("products.name as product, categories.name as category, products.description as description, products.image_url, products.price, products.quantity, products.created_date, products.id").order("created_date ASC").paginate(page: params[:page], per_page: 10)
+	  
 		#pass edit and delete routes to view to display in @curd variable
 		@curd    = Array('Edit' => '/admin/product/edit', 'Delete' => '/admin/product/delete')
 	end

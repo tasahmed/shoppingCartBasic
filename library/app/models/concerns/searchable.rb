@@ -21,10 +21,10 @@ module Searchable
     settings index: { number_of_shards: 1 } do
       mappings dynamic: 'false' do
         indexes :name, type: 'text'
-        indexes :description, type: :keyword
-        indexes :price, type: :keyword
-        indexes :image_url, type: :keyword
-        indexes :created_date, type: :keyword
+        indexes :description, type: 'text'
+        indexes :price, type: 'integer'
+        indexes :image_url, type: 'object', enabled: false
+        indexes :created_date, type: 'date'
       end
     end
 
@@ -44,6 +44,8 @@ module Searchable
          }  
        }
      }
+
+     #logger.debug "Query Params #{query}"
 
      if query.blank?
        set_filters.call(:must, match_all: {})

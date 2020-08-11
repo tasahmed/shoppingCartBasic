@@ -6,4 +6,11 @@
 		<%= link_to 'Add New', '/admin/product/new', class: "btn btn-dark" %>
 	</div>
 	<%= render partial: "admin/common/table", locals: {columns: @columns, rows: @rows} %>
+
+	<div class="apple_pagination">
+	    <div class="page_info">
+	      <%= page_entries_info @rows %>
+	    </div>
+    	<%= will_paginate @rows, :container => false %>
+  </div>
 </div>

@@ -74,5 +74,9 @@ Rails.application.configure do
 
 
   config.active_job.queue_adapter = :delayed_job
+
+  config.action_dispatch.default_headers = {
+  'X-Frame-Options' => 'ALLOW-FROM https://www.sandbox.paypal.com"',
+  }
   
 end

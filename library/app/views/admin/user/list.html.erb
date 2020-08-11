@@ -3,4 +3,10 @@
 </div>
 <div class="row">
 	<%= render "customers" %>
+	<div class="apple_pagination">
+	    <div class="page_info">
+	      <%= page_entries_info @rows %>
+	    </div>
+    	<%= will_paginate @rows, :container => false %>
+  </div>
 </div>

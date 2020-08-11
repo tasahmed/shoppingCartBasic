@@ -9,7 +9,7 @@ class Admin::UserController < ApplicationController
 		#pass this value to get the table header
 		@columns = Array["name", "email", "user_type", "created_at"]
 		#pass this value to get the table rows
-		@rows    = User.select("name, email, user_type, created_at", "id")
+		@rows    = User.select("name, email, user_type, created_at", "id").paginate(page: params[:page], per_page: 10)
 		#pass edit and delete routes to view to display in @curd variable
 		@curd    = Array('Edit' => '/admin/user/edit', 'Delete' => '/admin/user/delete')
 

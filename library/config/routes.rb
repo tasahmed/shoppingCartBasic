@@ -10,22 +10,25 @@ Rails.application.routes.draw do
   #get 'sessions/welcome'
   post 'logout', to: 'sessions#destroy' 
 
-  devise_for :user
+  #devise_for :user
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   
   get 'product/list'
   get 'category/list'
 
+  get 'product/payment', to: 'product#initiatePayment'
   get 'product/show/:id', to: 'product#show'
   get 'product/:id', to: 'product#show', as:'product'
   
   post 'order/confirm'
+
 
   #define API for ajax calls
   resources :product do
   	collection do
   		post 'search'
       post 'calculateValue'
+      post 'paypal-transaction-complete', to: 'product#complete_payment'
   	end	
   end
 

@@ -2,15 +2,17 @@ class ProductController < ApplicationController
 	
 	layout 'standards'
 
+	#include InitializePaymentPaypal
+
 	### function to list all products in list page based on added date
 	def list
 		@categories = Category.all
-		@products   = Product.order("created_date DESC")
+		@products   = Product.order("created_date DESC").paginate(page: params[:page], per_page: 10)
 	end
 
 	def show
-		@product = Product.find(params[:id])
-		@categories   = Category.all
+		@product 		= Product.find(params[:id])
+		@categories = Category.all
 	end	
 
 #	def search
@@ -86,10 +88,101 @@ class ProductController < ApplicationController
 		render json: {success: responseCode, html_content: totalValue, cumulativeTotal: cumulativeText}
 	end
 
+
+	def complete_payment
+		
+	end
+
+
+	def initiatePayment
+
+		@categories = Category.all
+
+		#require 'paypal-checkout-sdk'
+		
+		#initiatePayment
+
+		# Creating Access Token for Sandbox
+		# client_id 	  = Rails.configuration.application['PAYPAL_CLIENT_ID'] 
+		# client_secret = Rails.configuration.application['PAYPAL_CLIENT_SECRET'] 
+
+		# # Creating an environment
+		# environment = PayPal::SandboxEnvironment.new(client_id, client_secret)
+		# client 		  = PayPal::PayPalHttpClient.new(environment)
+
+
+		# PAYPAL 6 methods:
+		# 1. Set up TRANSACTION
+		# 2. Set up Authorization
+		# 3. Get TRANSACTION details
+		# 4. Capture trranaction
+		# 5. Create Authorization
+		# 6. Capture an authorization
+
+		require 'paypal-checkout-sdk'
+
+		client_id 	  = Rails.configuration.application['PAYPAL_CLIENT_ID'] 
+		client_secret = Rails.configuration.application['PAYPAL_CLIENT_SECRET'] 
+
+		# Creating an environment
+		environment = PayPal::SandboxEnvironment.new(client_id, client_secret)
+		client 		  = PayPal::PayPalHttpClient.new(environment)
+
+		#### SET UP TRANSACTION - CREATES AN ORDER ID ####
+
+		# request = PayPalCheckoutSdk::Orders::OrdersCreateRequest::new
+
+		# request.request_body({
+  #     intent: "CAPTURE",
+  #     purchase_units: [
+  #         {
+  #             amount: {
+  #                 currency_code: "USD",
+  #                 value: "100.00"
+  #             }
+  #         }
+  #     ]
+  #   })
+
+		# begin
+	 #    # Call API with your client and get a response for your call
+	 #    response = client.execute(request)
+	 #    #logger.debug "Response: #{response}"
+	 #    # If call returns body in response, you can get the deserialized version from the result attribute of the response
+	 #    order = response.result
+	 #    logger.debug "Create Order response #{order}"
+	 #    logger.debug "Create Order Id  #{order.id}"
+
+		# rescue PayPalHttp::HttpError => ioe
+	 #    # Something went wrong server-side
+	 #    logger.debug "Create Order - Error Status Code: #{ioe.status_code}"
+	 #    logger.debug "Create Order - Error header #{ioe.headers['debug_id']}"
+		
+		# end
+
+		### CAPTURE AN ORDER
+
+		request = PayPalCheckoutSdk::Orders::OrdersCaptureRequest::new('01H58152W0418461V')
+
+		begin
+	    # Call API with your client and get a response for your call
+	    response = client.execute(request) 
+	    
+	    # If call returns body in response, you can get the deserialized version from the result attribute of the response
+	    order = response.result
+	    logger.debug "#Capture response: {order}"
+		rescue PayPalHttp::HttpError => ioe
+		  # Something went wrong server-side
+			logger.debug "Capture Order - Error Status Code: #{ioe.status_code}"
+	    logger.debug "Capture Order - Error header #{ioe.headers['debug_id']}"
+		end
+
+	end
+
 	private
 
 	def search_params
 		params.permit(:search_val)
 	end
-	
+
 end
