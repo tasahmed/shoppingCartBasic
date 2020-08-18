@@ -36,4 +36,4 @@ Gems required installed:
 
 APIs used
  * Elastic search rails
- * paypal using javascript
+ * Stripe Payment API
