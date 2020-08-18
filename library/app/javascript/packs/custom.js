@@ -28,7 +28,6 @@ window.calculatePriceOnQuantity = function(value, id, elem_id, secondary_field) 
 
 }
 
-
 window.initiaAjax = function(reqUrl, postData, responsDiv, secondary_field) {
 
 	$.ajax({

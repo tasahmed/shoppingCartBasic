@@ -22,6 +22,7 @@ class SessionsController < ApplicationController
         #set session variables
         session[:user_id]   = @user.id
         session[:user_type] = @user.user_type
+        session[:email]     = @user.email
 
         ##user_type 1 = admin
         if @user.user_type == 0
@@ -47,7 +48,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:user_id] = session[:user_type] = nil
+    session[:user_id] = session[:user_type] =  session[:email] = nil
     #flash[:message]   = "User logged out Successfully!"
     redirect_to '/welcome'
   end

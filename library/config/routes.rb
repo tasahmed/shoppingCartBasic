@@ -40,6 +40,8 @@ Rails.application.routes.draw do
 
   get 'authorized', to: 'sessions#page_requires_login'
 
+  post 'process_payment', to:'order#process_payment'
+
   ##admin routes
   namespace :admin do
     

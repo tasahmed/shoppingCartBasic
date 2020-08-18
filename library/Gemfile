@@ -67,6 +67,8 @@ group :development do
   
   #delayed job queue gem
   gem "delayed_job_active_record"
+
+  gem 'stripe'
 end
 
 group :test do

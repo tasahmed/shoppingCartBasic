@@ -8,6 +8,7 @@ class CreateOrders < ActiveRecord::Migration[6.0]
       t.column :ordered_quantity, :integer, :null => false
       t.column :orderd_date, :timestamp, :null => false
       t.column :order_status, :integer, :default => 0
+      t.column :payment_id, :integer, :default => 0
       t.timestamps
     end
   end

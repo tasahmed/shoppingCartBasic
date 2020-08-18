@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_24_180154) do
+ActiveRecord::Schema.define(version: 2020_08_17_125135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2020_07_24_180154) do
     t.integer "ordered_quantity", null: false
     t.datetime "orderd_date", null: false
     t.integer "order_status", default: 0
+    t.integer "payment_id", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -60,13 +61,10 @@ ActiveRecord::Schema.define(version: 2020_07_24_180154) do
   end
 
   create_table "payments", force: :cascade do |t|
-    t.string "new"
-    t.integer "cart_id"
-    t.string "ip_address"
-    t.string "first_name"
-    t.string "last_name"
-    t.string "card_type"
-    t.date "card_expires_on"
+    t.string "email"
+    t.string "token"
+    t.integer "user_id"
+    t.float "amount"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
