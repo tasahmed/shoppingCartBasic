@@ -8,9 +8,15 @@ class UserController < ApplicationController
   end
 
   def create
-  	 @user = User.create(params.require(:user).permit(:name, :password, :email))
-   	 session[:user_id] = @user.id
-   	 redirect_to '/product/list'
+
+    @randomCode = generate_activation_code(10)
+
+    params[:user][:user_type] = 1;
+    
+    @user = User.create(params.require(:user).permit(:name, :email, :user_type, :password))
+    logger.debug "Error in saving user #{@user.errors.full_messages}"
+   	session[:user_id] = @user.id
+    redirect_to '/product/list'
   end
   
 end

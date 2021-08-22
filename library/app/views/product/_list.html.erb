@@ -7,7 +7,7 @@
 			 	<div class="card mb-3" style="max-width: 18rem;">
 					<%= image_tag("#{p.image_url}", alt:"No Image",  class:"card-img-top") %>
 				    <div class="card-body">
-				      <h5 class="card-title"><%= p.name %></h5>
+				      <h5 class="card-title"><%= p.name %>TTest<%= @check %></h5>
 				      <p class="font-weight-bold">Rs. <%= number_with_precision(p.price, precision:2) %></p>
 				      <p class="card-text"><%= p.description %></p>
 				    </div>

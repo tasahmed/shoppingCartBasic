@@ -16,16 +16,16 @@ class SessionsController < ApplicationController
     end
 
 	   @user = User.find_by(name: params[:username])
-	   
+	   #@user = User.new
      if @user && @user.authenticate(params[:password])
 
         #set session variables
         session[:user_id]   = @user.id
         session[:user_type] = @user.user_type
         session[:email]     = @user.email
-
+        logger.debug "UserType #{@user.user_type}"
         ##user_type 1 = admin
-        if @user.user_type == 0
+        if @user.user_type == 'admin'
 	       redirect_to '/admin/user/list'
         ## other user_types are treated as normal users for now
         else

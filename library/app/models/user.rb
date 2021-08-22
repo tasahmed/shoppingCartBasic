@@ -5,12 +5,12 @@ class User < ApplicationRecord
   has_secure_password
 	has_many :order
 	
-	validates :name, presence: true, length: {minimum: 6, maximum: 50}
+	validates :name, presence: true, length: {minimum: 4, maximum: 50}
 	#validate :name, :email, presence: true
 	validates :email, uniqueness: true, length: {minimum: 10, maximum: 300}
 	validates :password, presence: true
 	
-	enum userStatus: { inactive: 0, active: 1 }
-	enum userType: { admim: 0, normal: 1, buyer: 2 }
+	enum user_status: { inactive: 0, active: 1 }
+	enum user_type: { admin: 0, normal: 1, buyer: 2 }
 
 end

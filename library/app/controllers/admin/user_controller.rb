@@ -3,6 +3,7 @@ class Admin::UserController < ApplicationController
 	#layout "admin", only: [:adminList]
 	layout "admin"
 
+	before_action :restrict_user_by_role 
 	before_action :set_user, only: [:edit, :destroy, :update]
 
 	def list

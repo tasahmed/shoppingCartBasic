@@ -43,7 +43,9 @@ $(document).on('ready turbolinks:load', function() {
 			$form.get(0).submit();
 
 		}
+
 		return false;
+
 	};
 
 	show_error = function (message) {
@@ -55,6 +57,8 @@ $(document).on('ready turbolinks:load', function() {
 		$("#flash-messages").html('<div class="alert alert-danger"><a class="close" data-dismiss="alert">×</a><div id="flash_alert">' + message + '</div></div>');
 		$("body,html").animate({scrollTop: $("#flash-messages").offset().top},800);
 		$('.alert').delay(5000).fadeOut(3000);
+		
 		return false;
+		
 	};
 });

@@ -6,8 +6,11 @@ class ProductController < ApplicationController
 
 	### function to list all products in list page based on added date
 	def list
-		@categories = Category.all
-		@products   = Product.order("created_date DESC").paginate(page: params[:page], per_page: 10)
+		@categories 	  = Category.all
+		@products   	  = Product.order("created_date DESC").paginate(page: params[:page], per_page: 10)
+		@practice_hash	= Constants::PRACTICE_AREAS
+		practice        = 2003
+		@check      		= @practice_hash[practice] 
 	end
 
 	def show

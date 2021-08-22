@@ -41,7 +41,7 @@ gem 'rack-mini-profiler'
 
 ## add pagination gem
 gem 'will_paginate', '~> 3.1.0'
-
+gem 'axlsx', '3.0.0.pre'
 gem 'paypal-checkout-sdk'
 
 group :development, :test do

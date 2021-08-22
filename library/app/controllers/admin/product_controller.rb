@@ -2,6 +2,7 @@ class Admin::ProductController < ApplicationController
 
 	layout "admin"
 
+	before_action :restrict_user_by_role 
 	before_action :set_product, only: [:update, :edit, :destroy] 
 
 	def list

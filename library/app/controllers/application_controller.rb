@@ -4,9 +4,11 @@ class ApplicationController < ActionController::Base
 	helper_method :current_user
 	helper_method :logged_in?
 
+	 # edit valid roles here      
+  VALID_ROLES_ADMIN_PAGES = ['admin']
 
 	def current_user    
-    	User.find_by(id: session[:user_id])  
+    	User.find_by(id: session[:user_id])  	
 	end
 
 	def logged_in?
@@ -21,5 +23,11 @@ class ApplicationController < ActionController::Base
 	def generate_activation_code(size = 6)
 	  charset = %w{ 2 3 4 6 7 9 A C D E F G H J K M N P Q R T V W X Y Z}
 	  (0...size).map{ charset.to_a[rand(charset.size)] }.join
+	end
+
+	def restrict_user_by_role
+		unless VALID_ROLES_ADMIN_PAGES.include?(current_user.user_type)
+			redirect_to '/product/list'
+		end
 	end
 end

@@ -40,6 +40,8 @@ class OrderController < ApplicationController
 
 			@products = Product.joins(:orders).where(orders: {user_id: @user_id, order_status: 0}).where.not(id: product_id).select("products.id as product_id, products.name, products.description, products.image_url, products.price as product_price, products.quantity as product_quantity, products.created_date, orders.id as order_id, orders.ordered_price, orders.ordered_quantity, orders.order_status")
 
+			#@products = Product.joins(:orders).where(orders: {user_id: @user_id, order_status: 0}).select("products.id as product_id, products.name, products.description, products.image_url, products.price as product_price, products.quantity as product_quantity, products.created_date, orders.id as order_id, orders.ordered_price, orders.ordered_quantity, orders.order_status")
+
 			logger.debug "All Products: #{@products.to_yaml}"
 
 			#get total number of products in order list count
@@ -80,6 +82,7 @@ class OrderController < ApplicationController
 		logger.debug "Email: #{session[:email]}"
 		logger.debug "Token: #{params[:payment]["token"]}"
 		logger.debug "User Id: #{session[:user_id]}"
+		logger.debug "params: #{params.to_json}"
 
 		@payment = Payment.new({ email: session[:email], token: params[:payment]["token"], user_id: session[:user_id], amount: session[:order_sum], created_at: Date.today, updated_at: Date.today })
 		flash[:error] = "Please check errors #{@payment.errors}" unless @payment.valid?
