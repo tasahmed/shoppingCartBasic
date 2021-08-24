@@ -16,6 +16,7 @@ jobs:
           run: |
             import platform
             print(platform.processor())
+            shell: python
     run-windows-Commands:
       runs-on: windows-latest
       needs: ['run-shell-Command']
