@@ -17,3 +17,12 @@ jobs:
             import platform
             print(platform.processor())
             shell: python
+    run-windows-command:
+      runs-on: windows-latest
+      needs: ['run-shell-Command']
+      steps:
+        -name: 'Directory'
+         run: Get-Location
+        -name: Directory Bash
+         run: pwd
+         shell: Bash
