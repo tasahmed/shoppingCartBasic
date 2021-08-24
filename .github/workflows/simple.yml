@@ -13,8 +13,8 @@ jobs:
             node -v
             npm -v
         - name: python Command
+          shell: python
           run: |
-            shell: python
             import platform
             print(platform.processor())
     run-windows-Commands:
