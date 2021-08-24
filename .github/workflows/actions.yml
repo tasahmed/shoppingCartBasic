@@ -8,7 +8,7 @@ jobs:
     steps: 
       - name: Simple js Action
         id: sjsa
-        uses: actions/hellow-world-javascript-action@v1
+        uses: actions/hello-world-javascript-action@v1
         with: 
           who-to-greet: Taslim
       - name: Log greeting time
