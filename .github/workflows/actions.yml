@@ -6,9 +6,15 @@ jobs:
   run-github-Action:
     runs-on: ubuntu-latest
     steps:
-      - name: list scirpt
+      - name: list scirpt before checkout
         run: |
-          ls
+          ls -a
+          pwd
+      - name: checkout
+        uses: actions/checkout@v2.3.4
+      - name: list script after checkout
+        run : |
+          ls -a
           pwd
       - name: Simple js Action
         id: sjsa
