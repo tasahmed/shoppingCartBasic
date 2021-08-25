@@ -18,8 +18,12 @@ env:
 jobs:
   run-github-Action:
     runs-on: ubuntu-latest
+    env:
+      JOB_ENV: Available to all steps in run-github-Action job
     steps:
       - name: list before commit
+        env:
+          STEPS_ENV: Available only to this step
         run: |
           ls -a
           pwd
@@ -46,3 +50,5 @@ jobs:
       - name: check enviroment varaible
         run: |
           echo "WF_ENV: ${WF_ENV}"
+          echo "JOB_ENV: ${JOB_ENV}"
+          echo "STEPS_ENV ${STEPS_ENV}"
