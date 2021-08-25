@@ -45,4 +45,4 @@ jobs:
         run: echo "${{ steps.sjsa.output.time }}"
       - name: check enviroment varaible
         run: |
-          echo "WF_ENV: ${ WF_ENV }"
+          echo "WF_ENV: ${WF_ENV}"
