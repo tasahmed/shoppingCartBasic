@@ -1,23 +1,37 @@
 name: Action Workflow
 
 on: [push]
+env: 
+  WF_ENV: Available to all jobs
+
+#on: 
+#  repository_dispatch:
+#    types: [build]
+#push:
+#pull_request:
+#  types: [closed, assigned, opened, reopened]
+#on:
+#  pull_request:
+#    branches:
+#      -master
 
 jobs:
   run-github-Action:
     runs-on: ubuntu-latest
     steps:
-      - name: list scirpt before checkout and checkout current commit
+      - name: list before commit
         run: |
           ls -a
           pwd
-          echo $GITHUB_SHA
-          echo $GITHUB_REPOSITORY
-          echo $GITHUB_WORKSPACE
-          echo ${{ github.token }}
-          git clone git@github:$GITHUB_REPOSITORY
-          git checkout $GITHUB_SHA
-      - name: checkout
+          #echo $GITHUB_SHA
+          #echo $GITHUB_REPOSITORY
+          #echo $GITHUB_WORKSPACE
+          #echo ${{ github.token }}
+      - name: checkout files from repo
         uses: actions/checkout@v2.3.4
+        with:
+          token: ${{ secrets.PAT }}
+          repository: tasahmed/shoppingCartBasic
       - name: list script after checkout
         run : |
           ls -a
@@ -29,3 +43,6 @@ jobs:
           who-to-greet: Taslim
       - name: Log greeting time
         run: echo "${{ steps.sjsa.output.time }}"
+      - name: check enviroment varaible
+        run: |
+          echo "WF_ENV: ${ WF_ENV }"
