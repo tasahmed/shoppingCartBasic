@@ -4,12 +4,17 @@ on: push
 
 jobs:
   node-version:
-    runs-on: ubuntu-latest
+    stratergy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        node_version: [6, 8, 10]
+        #fail-fast:true - further jobs will not run if first step fails
+    runs-on: ${{ matrix.os }}
     steps:
         - name: Log node version
           run: node -v
         - uses: actions/setup-node@v1
           with:
-            node-version: 6
+            node-version: ${{ matrix.node_version }}
         - name: Log node version
           run: node -v
