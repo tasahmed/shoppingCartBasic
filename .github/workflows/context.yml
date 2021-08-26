@@ -22,7 +22,8 @@ jobs:
         run:
           echo "$GITHUB_CONTEXT"
       - name: Dump Job Context
-        if: success()#failure() / cancelled()/ always()
+        if: success()
+        #failure() / cancelled()/ always()
         env:
           JOB_CONTEXT: ${{ toJson(job) }}
         run:
@@ -32,4 +33,5 @@ jobs:
           STEPS_CONTEXT: ${{ toJson(steps) }}
         run:
           echo "$STEPS_CONTEXT"
+
 
