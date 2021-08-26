@@ -1,0 +1,35 @@
+name: Context
+
+on: [push, pull_request]
+
+jobs:
+  functions:
+    runs-on: ubuntu-16.04
+    steps:
+      - name: dump
+        run: |
+          echo ${{ contains('hello', 'll') }}
+          echo ${{ contains('hello', 'he') }}
+          echo ${{ contains ('hello','lo') }}
+          echo ${{ format('Hello {0} {1} {2}', 'World', '!', '!') }}
+  one:
+    runs-on: ubuntu-16.04
+    if: github.event_name == 'push'
+    steps:
+      -name: Dump Github Context
+       env:
+         GITHUB_CONTEXT: ${{ toJson(github) }}
+       run:
+         echo "$GITHUB_CONTEXT"
+      -name: Dump Job Context
+       if: success()#failure() / cancelled()/ always()
+       env:
+         JOB_CONTEXT: ${{ toJson(job) }}
+       run:
+         echo "$JOB_CONTEXT"
+      -name: Dump Job Context
+        env:
+          STEPS_CONTEXT: ${{ toJson(steps) }}
+        run:
+          echo "$STEPS_CONTEXT"
+
