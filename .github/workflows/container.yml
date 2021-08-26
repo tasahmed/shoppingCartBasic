@@ -12,7 +12,7 @@ jobs:
       #volumes:
       #options: --cpus 1 --host
     steps:
-      -name: Log node version
-       run: |
-         node -v
-         cat /etc/os-release
+      - name: Log node version
+        run: |
+          node -v
+          cat /etc/os-release
