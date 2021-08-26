@@ -17,7 +17,7 @@ jobs:
           - os: ubuntu-latest
             node_version: 6
           - os: macos-latest
-            node: version 8
+            node_version: version 8
         #fail-fast:true - further jobs will not run if first step fails
     runs-on: ${{ matrix.os }}
     env:
