@@ -5,6 +5,8 @@ on: [push, pull_request]
 jobs:
   functions:
     runs-on: ubuntu-latest
+    timeout-minutes: 360 
+    #in minutes to timeout the jobs also can be used in steps individually
     steps:
       - name: dump
         run: |
@@ -21,6 +23,7 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run:
           echo "$GITHUB_CONTEXT"
+      # continue-on-error: true  -- if the above step fails
       - name: Dump Job Context
         if: success()
         #failure() / cancelled()/ always()
