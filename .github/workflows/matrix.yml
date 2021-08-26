@@ -9,10 +9,10 @@ jobs:
         os: [macos-latest, ubuntu-latest, windows-latest]
         node_version: [6, 8, 10]
         include: 
-          os: ubuntu-latest
-          node_version: 8
-          is_ubuntu_8: "true"
-          #this adds extra array value to node_version array
+          - os: ubuntu-latest
+            node_version: 8
+            is_ubuntu_8: "true"
+            #this adds extra array value to node_version array
         exclude: 
           - os: ubuntu-latest
             node_version: 6
